@@ -9,11 +9,11 @@ async def create(body: ContactModel, user: User, db: Session):
     """
     Create a new contact
 
-    :param body: Contact
+    :param body: all parameters for new contact
     :type body: ContactModel
-    :param user: User
+    :param user: current user - contact owner 
     :type user: User
-    :param db: Session
+    :param db: current session to db
     :type db: Session
     :return: Contact
     :rtype: Contact
@@ -26,16 +26,46 @@ async def create(body: ContactModel, user: User, db: Session):
 
 
 async def get_all(skip: int, limit: int, user: User, db: Session):
+    """
+    info
+
+    :param user: current user - contact owner 
+    :type user: User
+    :param db: current session to db
+    :type db: Session
+    :return: 
+    :rtype: List
+    """
     contacts = db.query(Contact).offset(skip).limit(limit).filter(Contact.user_id == user.id).all()
     return contacts
 
 
 async def get_one(contact_id, user: User, db: Session):
+    """
+    info
+
+    :param user: current user - contact owner 
+    :type user: User
+    :param db: current session to db
+    :type db: Session
+    :return: 
+    :rtype: Contact
+    """
     contact = db.query(Contact).filter(and_(Contact.user_id == user.id, id=contact_id)).first()
     return contact
 
 
 async def update(contact_id, body: ContactModel, user: User, db: Session):
+    """
+    info
+
+    :param user: current user - contact owner 
+    :type user: User
+    :param db: current session to db
+    :type db: Session
+    :return: 
+    :rtype: Contact
+    """
     contact = await get_one(contact_id, user, db)
     if contact:
         contact.first_name = body.first_name
@@ -47,6 +77,16 @@ async def update(contact_id, body: ContactModel, user: User, db: Session):
 
 
 async def delete(contact_id, user: User, db: Session):
+    """
+    info
+
+    :param user: current user - contact owner 
+    :type user: User
+    :param db: current session to db
+    :type db: Session
+    :return: 
+    :rtype: Contact
+    """
     contact = await get_one(contact_id, user, db)
     if contact:
         db.delete(contact)
@@ -55,21 +95,61 @@ async def delete(contact_id, user: User, db: Session):
 
 
 async def find_by_name(contact_name, user: User, db: Session):
+    """
+    info
+
+    :param user: current user - contact owner 
+    :type user: User
+    :param db: current session to db
+    :type db: Session
+    :return: 
+    :rtype: Contact
+    """
     contact = db.query(Contact).filter(and_(Contact.user_id == user.id, first_name=contact_name)).first()
     return contact
 
 
 async def find_by_lastname(lastname, user: User, db: Session):
+    """
+    info
+
+    :param user: current user - contact owner 
+    :type user: User
+    :param db: current session to db
+    :type db: Session
+    :return: 
+    :rtype: Contact
+    """
     contact = db.query(Contact).filter(and_(Contact.user_id == user.id, last_name=lastname)).first()
     return contact
 
 
 async def find_by_email(email, user: User, db: Session):
+    """
+    info
+
+    :param user: current user - contact owner 
+    :type user: User
+    :param db: current session to db
+    :type db: Session
+    :return: 
+    :rtype: Contact
+    """
     contact = db.query(Contact).filter(and_(Contact.user_id == user.id, email=email)).first()
     return contact
 
 
 async def find_birthday7day(user: User, db: Session):
+    """
+    contact with birthday next 7 days
+
+    :param user: current user - contact owner 
+    :type user: User
+    :param db: current session to db
+    :type db: Session
+    :return: contact with birthday next 7 days 
+    :rtype: List
+    """
     contacts = []
     db_contacts = await get_all(user, db)
     today = date.today()
