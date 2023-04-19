@@ -27,13 +27,17 @@ async def create(body: ContactModel, user: User, db: Session):
 
 async def get_all(skip: int, limit: int, user: User, db: Session):
     """
-    info
+    get part of contact from current user
 
+    :param skip: number of contacts to skip
+    :type skip: int
+    :param limit: number of contacts to return
+    :type limit: int
     :param user: current user - contact owner 
     :type user: User
     :param db: current session to db
     :type db: Session
-    :return: 
+    :return: part of contact from current user
     :rtype: List
     """
     contacts = db.query(Contact).offset(skip).limit(limit).filter(Contact.user_id == user.id).all()
@@ -42,13 +46,15 @@ async def get_all(skip: int, limit: int, user: User, db: Session):
 
 async def get_one(contact_id, user: User, db: Session):
     """
-    info
+    get contact by db id
 
+    :param contact_id: id to find
+    :type contact_id: int
     :param user: current user - contact owner 
     :type user: User
     :param db: current session to db
     :type db: Session
-    :return: 
+    :return: Contact
     :rtype: Contact
     """
     contact = db.query(Contact).filter(and_(Contact.user_id == user.id, id=contact_id)).first()
@@ -57,13 +63,17 @@ async def get_one(contact_id, user: User, db: Session):
 
 async def update(contact_id, body: ContactModel, user: User, db: Session):
     """
-    info
+    Update contact field, find by db id
 
+    :param contact_id: id to find
+    :type contact_id: int
+    :param body: all new parameters for contact
+    :type body: ContactModel
     :param user: current user - contact owner 
     :type user: User
     :param db: current session to db
     :type db: Session
-    :return: 
+    :return: Contact
     :rtype: Contact
     """
     contact = await get_one(contact_id, user, db)
@@ -78,13 +88,15 @@ async def update(contact_id, body: ContactModel, user: User, db: Session):
 
 async def delete(contact_id, user: User, db: Session):
     """
-    info
+    delete contact find contact by db id
 
-    :param user: current user - contact owner 
+    :param contact_id: id to find
+    :type contact_id: int
+    :param user: current user - contact owner
     :type user: User
     :param db: current session to db
     :type db: Session
-    :return: 
+    :return: Contact
     :rtype: Contact
     """
     contact = await get_one(contact_id, user, db)
@@ -96,13 +108,15 @@ async def delete(contact_id, user: User, db: Session):
 
 async def find_by_name(contact_name, user: User, db: Session):
     """
-    info
+    get contact by first name in db
 
-    :param user: current user - contact owner 
+    :param contact_name: name to find
+    :type contact_name: str
+    :param user: current user - contact owner
     :type user: User
     :param db: current session to db
     :type db: Session
-    :return: 
+    :return: Contact
     :rtype: Contact
     """
     contact = db.query(Contact).filter(and_(Contact.user_id == user.id, first_name=contact_name)).first()
@@ -111,13 +125,15 @@ async def find_by_name(contact_name, user: User, db: Session):
 
 async def find_by_lastname(lastname, user: User, db: Session):
     """
-    info
+    get contact by last name in db
 
-    :param user: current user - contact owner 
+    :param lastname: lastname to find
+    :type lastname: str
+    :param user: current user - contact owner
     :type user: User
     :param db: current session to db
     :type db: Session
-    :return: 
+    :return: Contact
     :rtype: Contact
     """
     contact = db.query(Contact).filter(and_(Contact.user_id == user.id, last_name=lastname)).first()
@@ -126,13 +142,15 @@ async def find_by_lastname(lastname, user: User, db: Session):
 
 async def find_by_email(email, user: User, db: Session):
     """
-    info
+    get contact by email in db
 
-    :param user: current user - contact owner 
+    :param email: name to find
+    :type email: str
+    :param user: current user - contact owner
     :type user: User
     :param db: current session to db
     :type db: Session
-    :return: 
+    :return: Contact
     :rtype: Contact
     """
     contact = db.query(Contact).filter(and_(Contact.user_id == user.id, email=email)).first()
