@@ -50,11 +50,31 @@ async def confirmed_email(email: str, db: Session) -> None:
 
 
 async def update_token(user: User, token: str | None, db: Session) -> None:
+    """
+    Update token for user
+
+    :param user: all field for new user
+    :type user: UserModel
+    :param token: old token
+    :type token: str
+    :param db: current session to db
+    :type db: Session
+    """
     user.refresh_token = token
     db.commit()
 
 
 async def update_avatar(email, url: str, db: Session) -> User:
+    """
+    Update user's avatar
+
+    :param email: all field for new user
+    :type email: UserModel
+    :param url: url for avatar image
+    :type url: str
+    :param db: current session to db
+    :type db: Session
+    """
     user = await get_user_by_email(email, db)
     user.avatar = url
     db.commit()
