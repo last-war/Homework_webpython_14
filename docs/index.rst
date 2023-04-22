@@ -7,7 +7,7 @@ Welcome to FAST API HW14's documentation!
 =========================================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
    :caption: Contents:
 
 
@@ -21,7 +21,7 @@ REST API main
 
 REST API config Settings
 ========================
-.. automodule:: scr.conf.config
+.. automodule:: src.conf.config
    :members:
    :undoc-members:
    :show-inheritance:
@@ -29,7 +29,7 @@ REST API config Settings
 
 REST API repository Contacts
 ============================
-.. automodule:: scr.repository.contacts
+.. automodule:: src.repository.contacts
    :members:
    :undoc-members:
    :show-inheritance:
@@ -37,7 +37,7 @@ REST API repository Contacts
 
 REST API repository Notes
 ============================
-.. automodule:: scr.repository.notes
+.. automodule:: src.repository.notes
    :members:
    :undoc-members:
    :show-inheritance:
@@ -45,7 +45,7 @@ REST API repository Notes
 
 REST API repository Users
 ============================
-.. automodule:: scr.repository.users
+.. automodule:: src.repository.users
    :members:
    :undoc-members:
    :show-inheritance:
@@ -53,7 +53,7 @@ REST API repository Users
 
 REST API routes Contacts
 ============================
-.. automodule:: scr.routes.contacts
+.. automodule:: src.routes.contacts
    :members:
    :undoc-members:
    :show-inheritance:
@@ -61,7 +61,7 @@ REST API routes Contacts
 
 REST API routes Notes
 ============================
-.. automodule:: scr.routes.notes
+.. automodule:: src.routes.notes
    :members:
    :undoc-members:
    :show-inheritance:
@@ -69,7 +69,7 @@ REST API routes Notes
 
 REST API routes Users
 ============================
-.. automodule:: scr.routes.users
+.. automodule:: src.routes.users
    :members:
    :undoc-members:
    :show-inheritance:
@@ -77,7 +77,7 @@ REST API routes Users
 
 REST API routes Auth
 ============================
-.. automodule:: scr.routes.auth
+.. automodule:: src.routes.auth
    :members:
    :undoc-members:
    :show-inheritance:
@@ -85,7 +85,7 @@ REST API routes Auth
 
 REST API services Auth
 ============================
-.. automodule:: scr.services.auth
+.. automodule:: src.services.auth
    :members:
    :undoc-members:
    :show-inheritance:
@@ -93,7 +93,7 @@ REST API services Auth
 
 REST API services Email
 ============================
-.. automodule:: scr.services.email
+.. automodule:: src.services.email
    :members:
    :undoc-members:
    :show-inheritance:

@@ -11,8 +11,8 @@ async def get_user_by_email(email: str, db: Session) -> User:
     :type email: str
     :param db: current session to db
     :type db: Session
-    :return: User
-    :rtype: User
+    :return: User | None
+    :rtype: User | None
     """
     return db.query(User).filter(User.email == email).first()
 
@@ -25,8 +25,8 @@ async def create_user(body: UserModel, db: Session) -> User:
     :type body: UserModel
     :param db: current session to db
     :type db: Session
-    :return: User
-    :rtype: User
+    :return: User | None
+    :rtype: User | None
     """
     new_user = User(**body.dict())
     db.add(new_user)
@@ -43,6 +43,8 @@ async def confirmed_email(email: str, db: Session) -> None:
     :type email: str
     :param db: current session to db
     :type db: Session
+    :return: None if user is not confirmed
+    :rtype: None
     """
     user = await get_user_by_email(email, db)
     user.confirmed = True
@@ -59,6 +61,8 @@ async def update_token(user: User, token: str | None, db: Session) -> None:
     :type token: str
     :param db: current session to db
     :type db: Session
+    :return: None
+    :rtype: None
     """
     user.refresh_token = token
     db.commit()
@@ -74,6 +78,8 @@ async def update_avatar(email, url: str, db: Session) -> User:
     :type url: str
     :param db: current session to db
     :type db: Session
+    :return: User | None
+    :rtype: User | None
     """
     user = await get_user_by_email(email, db)
     user.avatar = url

@@ -38,8 +38,8 @@ async def update_avatar_user(file: UploadFile = File(), cur_user: User = Depends
     :type cur_user: User
     :param db: current session to db
     :type db: Session
-    :return: user
-    :rtype: user
+    :return: user | None
+    :rtype: User | None
     """
     cloudinary.config(
         cloud_name=settings.cloudinary_name,

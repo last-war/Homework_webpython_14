@@ -21,7 +21,7 @@ async def signup(body: UserModel, background_tasks: BackgroundTasks, request: Re
     :type body: UserModel
     :param background_tasks: to perform the task of sending a email
     :type background_tasks: BackgroundTasks
-    :param request: incoming request
+    :param request: incoming
     :type request: Request
     :param db: current session to db
     :type db: Session

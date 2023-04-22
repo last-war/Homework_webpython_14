@@ -89,8 +89,8 @@ async def update(body: ContactModel, contact_id: int = Path(ge=1), cur_user: Use
     :type cur_user: User
     :param db: current session to db
     :type db: Session
-    :return: Note
-    :rtype: Note
+    :return: Note | None
+    :rtype: Note | None
     """
 
     contact = await repository_contact.update(contact_id, body, cur_user, db)
@@ -110,8 +110,8 @@ async def delete(contact_id: int = Path(ge=1), cur_user: User = Depends(auth.get
     :type cur_user: User
     :param db: current session to db
     :type db: Session
-    :return: Contact
-    :rtype: Contact
+    :return: Contact | None
+    :rtype: Contact | None
     """
     contact = await repository_contact.delete(contact_id, cur_user, db)
     if contact is None:
@@ -130,8 +130,8 @@ async def find_by_name(contact_name: str, cur_user: User = Depends(auth.get_curr
     :type cur_user: User
     :param db: current session to db
     :type db: Session
-    :return: Contact
-    :rtype: Contact
+    :return: Contact | None
+    :rtype: Contact | None
     """
     contact = await repository_contact.find_by_name(contact_name, cur_user, db)
     if contact is None:
@@ -150,8 +150,8 @@ async def find_by_lastname(lastname: str, cur_user: User = Depends(auth.get_curr
     :type cur_user: User
     :param db: current session to db
     :type db: Session
-    :return: Contact
-    :rtype: Contact
+    :return: Contact | None
+    :rtype: Contact | None
     """
     contact = await repository_contact.find_by_lastname(lastname, cur_user, db)
     if contact is None:
@@ -170,8 +170,8 @@ async def find_by_email(email: str, cur_user: User = Depends(auth.get_current_us
     :type cur_user: User
     :param db: current session to db
     :type db: Session
-    :return: Contact
-    :rtype: Contact
+    :return: Contact | None
+    :rtype: Contact | None
     """
     contact = await repository_contact.find_by_email(email, cur_user, db)
     if contact is None:

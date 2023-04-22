@@ -14,8 +14,8 @@ async def create(body: NoteModel, user: User, db: Session):
     :type user: User
     :param db: current session to db
     :type db: Session
-    :return: Note
-    :rtype: Note
+    :return: Note | None
+    :rtype: Note | None
     """
     note = Note(**body.dict(), user_id=user.id)
     db.add(note)
@@ -49,8 +49,8 @@ async def get_one(note_id, user: User, db: Session):
     :type user: User
     :param db: current session to db
     :type db: Session
-    :return: Note
-    :rtype: Note
+    :return: Note | None
+    :rtype: Note | None
     """
     note = db.query(Note).filter(and_(Note.user_id == user.id, id=note_id)).first()
     return note
@@ -68,8 +68,8 @@ async def update(note_id, body: NoteModel, user: User, db: Session):
     :type user: User
     :param db: current session to db
     :type db: Session
-    :return: Note
-    :rtype: Note
+    :return: Note | None
+    :rtype: Note | None
     """
     note = await get_one(note_id, user, db)
     if note:
@@ -88,8 +88,8 @@ async def delete(note_id, user: User, db: Session):
     :type user: User
     :param db: current session to db
     :type db: Session
-    :return: Note
-    :rtype: Note
+    :return: Note | None
+    :rtype: Note | None
     """
     note = await get_one(note_id, user, db)
     if note:

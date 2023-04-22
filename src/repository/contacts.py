@@ -15,8 +15,8 @@ async def create(body: ContactModel, user: User, db: Session):
     :type user: User
     :param db: current session to db
     :type db: Session
-    :return: Contact
-    :rtype: Contact
+    :return: Contact | None
+    :rtype: Contact | None
     """
     contact = Contact(**body.dict(), user_id=user.id)
     db.add(contact)
@@ -54,8 +54,8 @@ async def get_one(contact_id, user: User, db: Session):
     :type user: User
     :param db: current session to db
     :type db: Session
-    :return: Contact
-    :rtype: Contact
+    :return: Contact | None
+    :rtype: Contact | None
     """
     contact = db.query(Contact).filter(and_(Contact.user_id == user.id, id=contact_id)).first()
     return contact
@@ -73,8 +73,8 @@ async def update(contact_id, body: ContactModel, user: User, db: Session):
     :type user: User
     :param db: current session to db
     :type db: Session
-    :return: Contact
-    :rtype: Contact
+    :return: Contact | None
+    :rtype: Contact | None
     """
     contact = await get_one(contact_id, user, db)
     if contact:
@@ -96,8 +96,8 @@ async def delete(contact_id, user: User, db: Session):
     :type user: User
     :param db: current session to db
     :type db: Session
-    :return: Contact
-    :rtype: Contact
+    :return: Contact | None
+    :rtype: Contact | None
     """
     contact = await get_one(contact_id, user, db)
     if contact:
@@ -116,8 +116,8 @@ async def find_by_name(contact_name, user: User, db: Session):
     :type user: User
     :param db: current session to db
     :type db: Session
-    :return: Contact
-    :rtype: Contact
+    :return: Contact | None
+    :rtype: Contact | None
     """
     contact = db.query(Contact).filter(and_(Contact.user_id == user.id, first_name=contact_name)).first()
     return contact
@@ -133,8 +133,8 @@ async def find_by_lastname(lastname, user: User, db: Session):
     :type user: User
     :param db: current session to db
     :type db: Session
-    :return: Contact
-    :rtype: Contact
+    :return: Contact | None
+    :rtype: Contact | None
     """
     contact = db.query(Contact).filter(and_(Contact.user_id == user.id, last_name=lastname)).first()
     return contact
@@ -150,8 +150,8 @@ async def find_by_email(email, user: User, db: Session):
     :type user: User
     :param db: current session to db
     :type db: Session
-    :return: Contact
-    :rtype: Contact
+    :return: Contact | None
+    :rtype: Contact | None
     """
     contact = db.query(Contact).filter(and_(Contact.user_id == user.id, email=email)).first()
     return contact

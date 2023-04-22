@@ -38,8 +38,8 @@ async def create(body: NoteModel, cur_user: User = Depends(auth.get_current_user
     :type cur_user: User
     :param db: current session to db
     :type db: Session
-    :return: Note
-    :rtype: Note
+    :return: Note | None
+    :rtype: Note | None
     """
     note = await repository_notes.create(body, cur_user, db)
     return note
@@ -56,8 +56,8 @@ async def get_one(note_id: int = Path(ge=1), cur_user: User = Depends(auth.get_c
     :type cur_user: User
     :param db: current session to db
     :type db: Session
-    :return: Note
-    :rtype: Note
+    :return: Note | None
+    :rtype: Note | None
     """
     note = await repository_notes.get_one(note_id, cur_user, db)
     if note is None:
@@ -78,8 +78,8 @@ async def update(body: NoteModel, note_id: int = Path(ge=1), cur_user: User = De
     :type cur_user: User
     :param db: current session to db
     :type db: Session
-    :return: Note
-    :rtype: Note
+    :return: Note | None
+    :rtype: Note | None
     """
     note = await repository_notes.update(note_id, body, cur_user, db)
     if note is None:
@@ -98,8 +98,8 @@ async def delete(note_id: int = Path(ge=1), cur_user: User = Depends(auth.get_cu
     :type cur_user: User
     :param db: current session to db
     :type db: Session
-    :return: Note
-    :rtype: Note
+    :return: Note | None
+    :rtype: Note | None
     """
     note = await repository_notes.delete(note_id, cur_user, db)
     if note is None:
