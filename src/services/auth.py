@@ -15,7 +15,7 @@ from jose import jwt, JWTError
 
 
 class Auth:
-    pwd_context = CryptContext
+    pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
     SECRET_KEY = settings.secret_key
     ALGORITHM = settings.algorithm
     oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/auth/login")
@@ -63,7 +63,7 @@ class Auth:
         :return: hash
         :rtype: str
         """
-        return self.pwd_context.hash(password)
+        return self.pwd_context.hash(secret=password)
 
     def verify_password(self, plain_password, password_hash):
         """
@@ -76,7 +76,7 @@ class Auth:
         :return: verify result
         :rtype: bool
         """
-        return self.pwd_context.verify(plain_password, password_hash)
+        return self.pwd_context.verify(secret=plain_password, hash=password_hash)
 
     async def get_current_user(self, token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
         """
@@ -172,8 +172,6 @@ class Auth:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Invalid scope for token')
         except JWTError:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Could not validate credentials')
-
-
 
 
 auth_service = Auth()

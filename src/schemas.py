@@ -3,8 +3,8 @@ from pydantic import BaseModel, Field, EmailStr
 
 
 class UserModel(BaseModel):
-    email: str = Field(min_length=4, max_length=120)
     name: str = Field(min_length=3, max_length=40)
+    email: str = Field(min_length=4, max_length=120)
     password: str = Field(min_length=8, max_length=255)
 
 
@@ -18,7 +18,7 @@ class UserDb(BaseModel):
         orm_mode = True
 
 
-class UserResponse(UserModel):
+class UserResponse(BaseModel):
     user: UserDb
     status: str = 'User added'
 
@@ -34,12 +34,7 @@ class ContactModel(BaseModel):
     last_name: str = Field(max_length=150, min_length=1)
     email: EmailStr
     phone: str = Field(max_length=14, min_length=6,
-                       regex='\d{3}\-\d{3}\-\d{2}\-\d{2}|'
-                             '\d{3}\-\d{3}\-\d{4}|'
-                             '\(\d{3}\)\d{3}\-\d{2}\-\d{2}|'
-                             '\(\d{3}\)\d{3}\-\d{4}|'
-                             '\(\d{3}\)\d{7}|\d{10}|'
-                             '\+\d{12}$')
+                       regex=r"\d{3}\-\d{3}\-\d{2}\-\d{2}|\d{3}\-\d{3}\-\d{4}|\(\d{3}\)\d{7}|\d{10}|\+\d{12}$")
     birthday: datetime
 
 

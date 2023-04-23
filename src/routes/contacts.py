@@ -15,7 +15,8 @@ finder = APIRouter(prefix='/contacts/find', tags=['find'])
 
 @router.get("/", response_model=List[ContactResponse], description='No more than 10 requests per minute',
             dependencies=[Depends(RateLimiter(times=10, seconds=60))])
-async def get_all(skip: int = 0, limit: int = 10, cur_user: User = Depends(auth.get_current_user), db: Session = Depends(get_db)):
+async def get_all(skip: int = 0, limit: int = 10, cur_user: User = Depends(auth.get_current_user),
+                  db: Session = Depends(get_db)):
     """
     Returns a list of contacts with limits
 
@@ -57,7 +58,8 @@ async def create(body: ContactModel, cur_user: User = Depends(auth.get_current_u
 
 
 @router.get("/{contact_id}", response_model=ContactResponse)
-async def get_one(contact_id: int = Path(ge=1), cur_user: User = Depends(auth.get_current_user), db: Session = Depends(get_db)):
+async def get_one(contact_id: int = Path(ge=1), cur_user: User = Depends(auth.get_current_user),
+                  db: Session = Depends(get_db)):
     """
     route to get contact by id
 
@@ -77,7 +79,8 @@ async def get_one(contact_id: int = Path(ge=1), cur_user: User = Depends(auth.ge
 
 
 @router.put("/{contact_id}", response_model=ContactResponse)
-async def update(body: ContactModel, contact_id: int = Path(ge=1), cur_user: User = Depends(auth.get_current_user), db: Session = Depends(get_db)):
+async def update(body: ContactModel, contact_id: int = Path(ge=1), cur_user: User = Depends(auth.get_current_user),
+                 db: Session = Depends(get_db)):
     """
     update contact by db id
 
@@ -100,7 +103,8 @@ async def update(body: ContactModel, contact_id: int = Path(ge=1), cur_user: Use
 
 
 @router.delete("/{contact_id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete(contact_id: int = Path(ge=1), cur_user: User = Depends(auth.get_current_user), db: Session = Depends(get_db)):
+async def delete(contact_id: int = Path(ge=1), cur_user: User = Depends(auth.get_current_user),
+                 db: Session = Depends(get_db)):
     """
     route to delete contact by contact id
 
@@ -120,7 +124,8 @@ async def delete(contact_id: int = Path(ge=1), cur_user: User = Depends(auth.get
 
 
 @finder.get("name/{contact_name}", response_model=ContactResponse)
-async def find_by_name(contact_name: str, cur_user: User = Depends(auth.get_current_user), db: Session = Depends(get_db)):
+async def find_by_name(contact_name: str, cur_user: User = Depends(auth.get_current_user),
+                       db: Session = Depends(get_db)):
     """
     route to get contact by contact name
 
@@ -140,7 +145,8 @@ async def find_by_name(contact_name: str, cur_user: User = Depends(auth.get_curr
 
 
 @finder.get("lastname/{lastname}", response_model=ContactResponse)
-async def find_by_lastname(lastname: str, cur_user: User = Depends(auth.get_current_user), db: Session = Depends(get_db)):
+async def find_by_lastname(lastname: str, cur_user: User = Depends(auth.get_current_user),
+                           db: Session = Depends(get_db)):
     """
     route to get contact by lastname
 

@@ -16,6 +16,7 @@ app = FastAPI()
 async def startup():
     """
     Initial redis db and limiter
+
     """
     r = await redis.Redis(host=settings.redis_host, port=settings.redis_port, db=0, encoding="utf-8",
                           decode_responses=True)
@@ -26,6 +27,7 @@ async def startup():
 async def root():
     """
     Main page
+
     :return: hello message
     :rtype: dict
     """
@@ -36,6 +38,7 @@ async def root():
 def healthchecker(db: Session = Depends(get_db)):
     """
     Health Checker
+
     :param db: database session
     :return: health status
     :rtype: dict

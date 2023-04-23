@@ -1,13 +1,15 @@
 
 import pytest
+
 from fastapi.testclient import TestClient
+from fastapi_limiter.depends import RateLimiter
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from main import app
 from src.database.models import Base
 from src.database.connector import get_db
-
+from src.services.auth import auth_service
 
 SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
 
@@ -48,4 +50,12 @@ def client(session):
 
 @pytest.fixture(scope="module")
 def user():
-    return {"username": "deadpool", "email": "deadpool@example.com", "password": "123456789"}
+    return {"name": "deadpool", "email": "deadpool@example.com", "password": "123456789"}
+
+
+@pytest.fixture(scope="function")
+def mock_rate_limit(mocker):
+    mock_rate_limit = mocker.patch.object(RateLimiter, '__call__', autospec=True)
+    mock_rate_limit.return_value = False
+
+
