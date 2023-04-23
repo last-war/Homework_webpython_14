@@ -36,7 +36,7 @@ async def get_all(user: User, db: Session) -> List[Note]:
     :return: Note
     :rtype: List
     """
-    return [db.query(Note).filter(Note.user_id == user.id).all()]
+    return db.query(Note).filter(Note.user_id == user.id).all()
 
 
 async def get_one(note_id, user: User, db: Session):

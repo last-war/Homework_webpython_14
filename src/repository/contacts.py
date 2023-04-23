@@ -40,7 +40,7 @@ async def get_all(skip: int, limit: int, user: User, db: Session):
     :return: part of contact from current user
     :rtype: List
     """
-    return [db.query(Contact).offset(skip).limit(limit).filter(Contact.user_id == user.id).all()]
+    return db.query(Contact).offset(skip).limit(limit).filter(Contact.user_id == user.id).all()
 
 
 async def get_one(contact_id, user: User, db: Session):
@@ -168,7 +168,7 @@ async def find_birthday7day(user: User, db: Session):
     :rtype: List
     """
     contacts = []
-    db_contacts = await get_all(user, db)
+    db_contacts = await get_all(skip=0, limit=100, user=user, db=db)
     today = date.today()
     for db_contact in db_contacts:
         birthday = db_contact.birthday

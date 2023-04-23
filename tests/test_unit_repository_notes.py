@@ -22,10 +22,11 @@ class TestNotes(unittest.IsolatedAsyncioTestCase):
         self.user = User(id=1)
 
     async def test_get_all(self):
-        notes = [Note()]
-        self.session.query().filter().offset().limit().all.return_value = notes
+        notes = [Note(), ]
+        self.session.query().filter().all.return_value = notes
         result = await get_all(user=self.user, db=self.session)
         self.assertEqual(result, notes)
+        self.assertListEqual(result, notes)
 
     async def test_create(self):
         body = NoteModel(contact_id=1, text="test")

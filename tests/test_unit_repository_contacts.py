@@ -37,9 +37,10 @@ class TestContacts(unittest.IsolatedAsyncioTestCase):
 
     async def test_get_all(self):
         contacts = [Contact(), ]
-        self.session.query().filter().offset().limit().all.return_value = contacts
+        self.session.query().offset().limit().filter().all.return_value = contacts
         result = await get_all(skip=0, limit=10, user=self.user, db=self.session)
         self.assertEqual(result, contacts)
+        self.assertListEqual(result, contacts)
 
     async def test_get_one_found(self):
         contact = Contact()
@@ -114,10 +115,11 @@ class TestContacts(unittest.IsolatedAsyncioTestCase):
         self.assertIsNone(result)
 
     async def test_find_birthday7day(self):
-        contacts = [Contact(), Contact()]
+        contacts = []
         self.session.query().filter().all.return_value = contacts
         result = await find_birthday7day(user=self.user, db=self.session)
         self.assertEqual(result, contacts)
+        self.assertListEqual(result, contacts)
 
 
 if __name__ == '__main__':
