@@ -22,32 +22,31 @@ class TestNotes(unittest.IsolatedAsyncioTestCase):
         self.user = User(id=1)
 
     async def test_get_all(self):
-        notes = [Note(), Note()]
+        notes = [Note()]
         self.session.query().filter().offset().limit().all.return_value = notes
         result = await get_all(user=self.user, db=self.session)
         self.assertEqual(result, notes)
 
     async def test_create(self):
-        body = NoteModel(contact_id=1, text="test", user_id=1)
+        body = NoteModel(contact_id=1, text="test")
         result = await create(body=body, user=self.user, db=self.session)
         self.assertEqual(result.contact_id, body.contact_id)
         self.assertEqual(result.text, body.text)
-        self.assertEqual(result.user_id, body.user_id)
         self.assertTrue(hasattr(result, "id"))
 
     async def test_get_one_not_found(self):
-        self.session.query().filter().all.return_value = None
+        self.session.query().filter().first.return_value = None
         result = await get_one(note_id=1, user=self.user, db=self.session)
         self.assertIsNone(result)
 
     async def test_get_one_found(self):
         note = Note()
-        self.session.query().filter().all.return_value = note
+        self.session.query().filter().first.return_value = note
         result = await get_one(note_id=1, user=self.user, db=self.session)
         self.assertEqual(result, note)
 
     async def test_update_not_found(self):
-        body = NoteModel(note_id=1, text="test", user_id=1)
+        body = NoteModel(note_id=1, text="test")
         self.session.query().filter().first.return_value = None
         self.session.commit.return_value = None
         result = await update(note_id=1, body=body, user=self.user, db=self.session)
@@ -55,7 +54,7 @@ class TestNotes(unittest.IsolatedAsyncioTestCase):
 
     async def test_update_found(self):
         note = Note()
-        body = NoteModel(note_id=1, text="test", user_id=1)
+        body = NoteModel(note_id=1, text="test")
         self.session.query().filter().first.return_value = note
         self.session.commit.return_value = None
         result = await update(note_id=1, body=body, user=self.user, db=self.session)

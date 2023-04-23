@@ -2,6 +2,7 @@ from src.database.models import Note, User
 from src.schemas import NoteModel
 from sqlalchemy.orm import Session
 from sqlalchemy import and_
+from typing import List
 
 
 async def create(body: NoteModel, user: User, db: Session):
@@ -24,7 +25,7 @@ async def create(body: NoteModel, user: User, db: Session):
     return note
 
 
-async def get_all(user: User, db: Session):
+async def get_all(user: User, db: Session) -> List[Note]:
     """
     get notes from current user
 
@@ -35,8 +36,7 @@ async def get_all(user: User, db: Session):
     :return: Note
     :rtype: List
     """
-    notes = db.query(Note).filter(Note.user_id == user.id).all()
-    return notes
+    return [db.query(Note).filter(Note.user_id == user.id).all()]
 
 
 async def get_one(note_id, user: User, db: Session):
@@ -52,7 +52,7 @@ async def get_one(note_id, user: User, db: Session):
     :return: Note | None
     :rtype: Note | None
     """
-    note = db.query(Note).filter(and_(Note.user_id == user.id, id=note_id)).first()
+    note = db.query(Note).filter(and_(Note.user_id == user.id, id == note_id)).first()
     return note
 
 

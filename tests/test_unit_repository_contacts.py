@@ -36,19 +36,19 @@ class TestContacts(unittest.IsolatedAsyncioTestCase):
         self.assertTrue(hasattr(result, "id"))
 
     async def test_get_all(self):
-        contacts = [Contact(), Contact()]
+        contacts = [Contact(), ]
         self.session.query().filter().offset().limit().all.return_value = contacts
-        result = await get_all(skip=1, limit=2, user=self.user, db=self.session)
+        result = await get_all(skip=0, limit=10, user=self.user, db=self.session)
         self.assertEqual(result, contacts)
 
     async def test_get_one_found(self):
         contact = Contact()
-        self.session.query().filter().all.return_value = contact
+        self.session.query().filter().first.return_value = contact
         result = await get_one(contact_id=1, user=self.user, db=self.session)
         self.assertEqual(result, contact)
 
     async def test_get_one_not_found(self):
-        self.session.query().filter().all.return_value = None
+        self.session.query().filter().first.return_value = None
         result = await get_one(contact_id=1, user=self.user, db=self.session)
         self.assertIsNone(result)
 
@@ -71,45 +71,45 @@ class TestContacts(unittest.IsolatedAsyncioTestCase):
 
     async def test_delete_found(self):
         contact = Contact()
-        self.session.query().filter().all.return_value = contact
+        self.session.query().filter().first.return_value = contact
         result = await delete(contact_id=1, user=self.user, db=self.session)
         self.assertEqual(result, contact)
 
     async def test_delete_not_found(self):
-        self.session.query().filter().all.return_value = None
+        self.session.query().filter().first.return_value = None
         result = await delete(contact_id=1, user=self.user, db=self.session)
         self.assertIsNone(result)
 
     async def test_find_by_name_found(self):
         contact = Contact()
-        self.session.query().filter().all.return_value = contact
+        self.session.query().filter().first.return_value = contact
         result = await find_by_name(contact_name='test', user=self.user, db=self.session)
         self.assertEqual(result, contact)
 
     async def test_find_by_name_not_found(self):
-        self.session.query().filter().all.return_value = None
+        self.session.query().filter().first.return_value = None
         result = await find_by_name(contact_name='test', user=self.user, db=self.session)
         self.assertIsNone(result)
 
     async def test_find_by_lastname_found(self):
         contact = Contact()
-        self.session.query().filter().all.return_value = contact
+        self.session.query().filter().first.return_value = contact
         result = await find_by_lastname(lastname='test', user=self.user, db=self.session)
         self.assertEqual(result, contact)
 
     async def test_find_by_lastname_not_found(self):
-        self.session.query().filter().all.return_value = None
+        self.session.query().filter().first.return_value = None
         result = await find_by_lastname(lastname='test', user=self.user, db=self.session)
         self.assertIsNone(result)
 
     async def test_find_by_email_found(self):
         contact = Contact()
-        self.session.query().filter().all.return_value = contact
+        self.session.query().filter().first.return_value = contact
         result = await find_by_email(email='test@email.com', user=self.user, db=self.session)
         self.assertEqual(result, contact)
 
     async def test_find_by_email_not_found(self):
-        self.session.query().filter().all.return_value = None
+        self.session.query().filter().first.return_value = None
         result = await find_by_email(email='test@email.com', user=self.user, db=self.session)
         self.assertIsNone(result)
 

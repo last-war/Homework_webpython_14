@@ -40,8 +40,7 @@ async def get_all(skip: int, limit: int, user: User, db: Session):
     :return: part of contact from current user
     :rtype: List
     """
-    contacts = db.query(Contact).offset(skip).limit(limit).filter(Contact.user_id == user.id).all()
-    return contacts
+    return [db.query(Contact).offset(skip).limit(limit).filter(Contact.user_id == user.id).all()]
 
 
 async def get_one(contact_id, user: User, db: Session):
@@ -57,7 +56,7 @@ async def get_one(contact_id, user: User, db: Session):
     :return: Contact | None
     :rtype: Contact | None
     """
-    contact = db.query(Contact).filter(and_(Contact.user_id == user.id, id=contact_id)).first()
+    contact = db.query(Contact).filter(and_(Contact.user_id == user.id, id == contact_id)).first()
     return contact
 
 
@@ -119,7 +118,7 @@ async def find_by_name(contact_name, user: User, db: Session):
     :return: Contact | None
     :rtype: Contact | None
     """
-    contact = db.query(Contact).filter(and_(Contact.user_id == user.id, first_name=contact_name)).first()
+    contact = db.query(Contact).filter(and_(Contact.user_id == user.id, Contact.first_name == contact_name)).first()
     return contact
 
 
@@ -136,7 +135,7 @@ async def find_by_lastname(lastname, user: User, db: Session):
     :return: Contact | None
     :rtype: Contact | None
     """
-    contact = db.query(Contact).filter(and_(Contact.user_id == user.id, last_name=lastname)).first()
+    contact = db.query(Contact).filter(and_(Contact.user_id == user.id, Contact.last_name == lastname)).first()
     return contact
 
 
@@ -153,7 +152,7 @@ async def find_by_email(email, user: User, db: Session):
     :return: Contact | None
     :rtype: Contact | None
     """
-    contact = db.query(Contact).filter(and_(Contact.user_id == user.id, email=email)).first()
+    contact = db.query(Contact).filter(and_(Contact.user_id == user.id, Contact.email == email)).first()
     return contact
 
 
