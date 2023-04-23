@@ -123,7 +123,7 @@ async def delete(contact_id: int = Path(ge=1), cur_user: User = Depends(auth.get
     return contact
 
 
-@finder.get("name/{contact_name}", response_model=ContactResponse)
+@finder.get("/name/{contact_name}", response_model=ContactResponse)
 async def find_by_name(contact_name: str, cur_user: User = Depends(auth.get_current_user),
                        db: Session = Depends(get_db)):
     """
@@ -144,7 +144,7 @@ async def find_by_name(contact_name: str, cur_user: User = Depends(auth.get_curr
     return contact
 
 
-@finder.get("lastname/{lastname}", response_model=ContactResponse)
+@finder.get("/lastname/{lastname}", response_model=ContactResponse)
 async def find_by_lastname(lastname: str, cur_user: User = Depends(auth.get_current_user),
                            db: Session = Depends(get_db)):
     """
@@ -165,7 +165,7 @@ async def find_by_lastname(lastname: str, cur_user: User = Depends(auth.get_curr
     return contact
 
 
-@finder.get("email/{email}", response_model=ContactResponse)
+@finder.get("/email/{email}", response_model=ContactResponse)
 async def find_by_email(email: str, cur_user: User = Depends(auth.get_current_user), db: Session = Depends(get_db)):
     """
     route to get contact by email address
@@ -185,7 +185,7 @@ async def find_by_email(email: str, cur_user: User = Depends(auth.get_current_us
     return contact
 
 
-@finder.get("birthday/", response_model=List[ContactResponse])
+@finder.get("/birthday/", response_model=List[ContactResponse])
 async def get_all(cur_user: User = Depends(auth.get_current_user), db: Session = Depends(get_db)):
     """
     route to get contact with bithday in 7 days

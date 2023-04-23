@@ -40,7 +40,7 @@ async def get_all(skip: int, limit: int, user: User, db: Session):
     :return: part of contact from current user
     :rtype: List
     """
-    return db.query(Contact).offset(skip).limit(limit).filter(Contact.user_id == user.id).all()
+    return db.query(Contact).filter(Contact.user_id == user.id).offset(skip).limit(limit).all()
 
 
 async def get_one(contact_id, user: User, db: Session):
@@ -56,7 +56,7 @@ async def get_one(contact_id, user: User, db: Session):
     :return: Contact | None
     :rtype: Contact | None
     """
-    contact = db.query(Contact).filter(and_(Contact.user_id == user.id, id == contact_id)).first()
+    contact = db.query(Contact).filter(and_(Contact.user_id == user.id, Contact.id == contact_id)).first()
     return contact
 
 
@@ -78,9 +78,6 @@ async def update(contact_id, body: ContactModel, user: User, db: Session):
     contact = await get_one(contact_id, user, db)
     if contact:
         contact.first_name = body.first_name
-        contact.last_name = body.last_name
-        contact.email = body.email
-        contact.birthday = body.birthday
         db.commit()
     return contact
 
